@@ -20,7 +20,7 @@ namespace Api.Controllers
             [FromBody] CreateProductRequest request,
             CancellationToken cancellationToken)
         {
-            var res = await _productService.CreateAsync(request, cancellationToken);
+            var res = await _productService.CreateAsync(request, userId: base.UserId, cancellationToken);
             return Ok(res);
         }
 
@@ -31,7 +31,7 @@ namespace Api.Controllers
             CancellationToken cancellationToken)
         {
             request.SetId(id);
-            var res = await _productService.UpdateAsync(request, cancellationToken);
+            var res = await _productService.UpdateAsync(request, userId: base.UserId, cancellationToken);
             return Ok(res);
         }
 
@@ -49,6 +49,15 @@ namespace Api.Controllers
             CancellationToken cancellationToken)
         {
             var res = await _productService.GetAllAsync(cancellationToken);
+            return Ok(res);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] int id,
+            CancellationToken cancellationToken)
+        {
+            var res = await _productService.DeleteAsync(id, userId: base.UserId, cancellationToken);
             return Ok(res);
         }
 

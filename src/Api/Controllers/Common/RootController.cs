@@ -6,6 +6,6 @@ namespace Api.Controllers.Common
     [Route("api/[controller]")]
     public abstract class RootController : ControllerBase
     {
-
+        protected int UserId => 1;//TODO load from TOKEN
     }
 }

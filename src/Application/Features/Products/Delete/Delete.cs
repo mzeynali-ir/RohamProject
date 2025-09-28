@@ -5,7 +5,7 @@ namespace Application.Features.Products
 
     public partial class ProductService : IProductService
     {
-        public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken)
+        public async Task<Result> DeleteAsync(int id, int userId, CancellationToken cancellationToken)
         {
 
             var product = await _repository.GetByIdAsync(id, cancellationToken);
@@ -17,7 +17,7 @@ namespace Application.Features.Products
 
             product.Delete();
 
-            var dbRes = await _repository.UpdateAsync(product, cancellationToken);
+            var dbRes = await _repository.UpdateAsync(product, userId, cancellationToken);
 
             if (dbRes is false)
             {

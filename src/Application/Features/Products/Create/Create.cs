@@ -5,7 +5,7 @@ namespace Application.Features.Products
 {
     public partial class ProductService : IProductService
     {
-        public async Task<Result> CreateAsync(CreateProductRequest input, CancellationToken cancellationToken)
+        public async Task<Result> CreateAsync(CreateProductRequest input, int userId, CancellationToken cancellationToken)
         {
 
             var isExist = await _repository.CheckExistByTitleAsync(
@@ -22,7 +22,7 @@ namespace Application.Features.Products
                 Title = input.Title,
             };
 
-            var dbRes = await _repository.AddAsync(product, cancellationToken);
+            var dbRes = await _repository.AddAsync(product, userId, cancellationToken);
 
             if (dbRes is false)
             {

@@ -1,11 +1,10 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
 
 namespace Application.Features.Products
 {
     public partial class ProductService : IProductService
     {
-        public async Task<Result> UpdateAsync(UpdateProductRequest input, CancellationToken cancellationToken)
+        public async Task<Result> UpdateAsync(UpdateProductRequest input, int userId, CancellationToken cancellationToken)
         {
 
             var product = await _repository.GetByIdAsync(input.Id, cancellationToken);
@@ -25,7 +24,9 @@ namespace Application.Features.Products
                 return Result.Failure(ProductMessages.NameIsDuplicate);
             }
 
-            var dbRes = await _repository.UpdateAsync(product, cancellationToken);
+            product.Title = input.Title;
+
+            var dbRes = await _repository.UpdateAsync(product, userId, cancellationToken);
 
             if (dbRes is false)
             {

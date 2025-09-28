@@ -15,10 +15,11 @@ namespace Application.Contracts.Repositories
             _context = context;
         }
 
-        public async Task<bool> AddAsync(Product product, CancellationToken cancellationToken)
+        public async Task<bool> AddAsync(Product product, int userId, CancellationToken cancellationToken)
         {
             try
             {
+                product.CreatorId = userId;
                 _context.Add(product);
                 await _context.SaveChangesAsync(cancellationToken);
                 return true;
@@ -58,11 +59,12 @@ namespace Application.Contracts.Repositories
 
         }
 
-        public async Task<bool> UpdateAsync(Product product, CancellationToken cancellationToken)
+        public async Task<bool> UpdateAsync(Product product, int userId, CancellationToken cancellationToken)
         {
             try
             {
                 product.LastModifiedOn = DateTime.Now;
+                product.LastModifierId = userId;
                 _context.Update(product);
                 await _context.SaveChangesAsync(cancellationToken);
                 return true;
