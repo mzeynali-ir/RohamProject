@@ -21,6 +21,16 @@ namespace Application.Contracts.Repositories
             {
                 product.CreatorId = userId;
                 _context.Add(product);
+
+                var log = new ProductLog()
+                {
+                    CreatorId = userId,
+                    CreatedOn = product.CreatedOn,
+                    Type = LogActionType.Add,
+                    ProductId = product.Id,
+                };
+                _context.ProductLogs.Add(log);
+
                 await _context.SaveChangesAsync(cancellationToken);
                 return true;
             }
@@ -43,6 +53,39 @@ namespace Application.Contracts.Repositories
             return res;
         }
 
+        public async Task<bool> DeleteAsync(int id, int userId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var product = await this.GetByIdAsync(id, cancellationToken);
+                if (product is null)
+                    return false;
+
+                var now = DateTime.Now;
+
+                product.Delete();
+                product.LastModifiedOn = now;
+                product.LastModifierId = userId;
+                _context.Update(product);
+
+                var log = new ProductLog()
+                {
+                    CreatorId = userId,
+                    CreatedOn = now,
+                    Type = LogActionType.Delete,
+                    ProductId = product.Id,
+                };
+                _context.ProductLogs.Add(log);
+
+                await _context.SaveChangesAsync(cancellationToken);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public async Task<List<Product>> GetAllAsync(CancellationToken cancellationToken)
         {
             return await _context.Products.ToListAsync(cancellationToken);
@@ -63,9 +106,21 @@ namespace Application.Contracts.Repositories
         {
             try
             {
-                product.LastModifiedOn = DateTime.Now;
+                var now = DateTime.Now;
+
+                product.LastModifiedOn = now;
                 product.LastModifierId = userId;
                 _context.Update(product);
+
+                var log = new ProductLog()
+                {
+                    CreatorId = userId,
+                    CreatedOn = now,
+                    Type = LogActionType.Update,
+                    ProductId = product.Id,
+                };
+                _context.ProductLogs.Add(log);
+
                 await _context.SaveChangesAsync(cancellationToken);
                 return true;
             }

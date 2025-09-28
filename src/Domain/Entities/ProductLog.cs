@@ -12,6 +12,9 @@
         public int CreatorId { get; init; }
         public User Creator { get; init; } = null!;
 
+        public int ProductId { get; init; }
+        public Product Product { get; init; } = null!;
+
     }
 
 }

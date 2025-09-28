@@ -8,7 +8,9 @@ namespace Infrastructure.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<ProductLog> builder)
         {
-
+            builder.HasOne(i => i.Creator)
+                .WithMany()
+                .HasForeignKey(i => i.CreatorId);
         }
     }
 }

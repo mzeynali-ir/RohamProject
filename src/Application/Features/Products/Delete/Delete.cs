@@ -15,9 +15,7 @@ namespace Application.Features.Products
                 return Result.Failure(ProductMessages.NotFound);
             }
 
-            product.Delete();
-
-            var dbRes = await _repository.UpdateAsync(product, userId, cancellationToken);
+            var dbRes = await _repository.DeleteAsync(id, userId, cancellationToken);
 
             if (dbRes is false)
             {

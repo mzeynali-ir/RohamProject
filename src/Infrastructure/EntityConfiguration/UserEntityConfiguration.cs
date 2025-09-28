@@ -15,6 +15,14 @@ namespace Infrastructure.EntityConfiguration
                 .HasMaxLength(64);
 
             builder.HasQueryFilter(i => i.IsDeleted == false);
+
+            builder.HasOne(i => i.Creator)
+                .WithMany()
+                .HasForeignKey(i => i.CreatorId);
+
+            builder.HasOne(i => i.LastModifier)
+                .WithMany()
+                .HasForeignKey(i => i.LastModifierId);
         }
     }
 }

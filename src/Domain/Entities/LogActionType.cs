@@ -3,7 +3,7 @@
     public enum LogActionType : byte
     {
         Delete,
-        Insert,
+        Add,
         Update,
     }
 
