@@ -10,6 +10,8 @@ namespace Infrastructure.EntityConfiguration
         {
             builder.Property(i => i.Title)
                 .HasMaxLength(64);
+
+            builder.HasQueryFilter(i => i.IsDeleted == false);
         }
     }
 }
