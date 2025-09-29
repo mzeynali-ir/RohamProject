@@ -17,7 +17,7 @@ namespace Application.Features.Products
             var checkDuplicateTitle = await _repository.CheckExistByTitleAsync(
                                                         title: input.Title,
                                                         cancellationToken,
-                                                        ignoreId: input.Id);
+                                                        productId: input.Id);
 
             if (checkDuplicateTitle)
             {

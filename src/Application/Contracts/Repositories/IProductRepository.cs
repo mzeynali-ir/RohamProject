@@ -9,6 +9,6 @@ namespace Application.Contracts.Repositories
         Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken);
         Task<bool> DeleteAsync(int id,int userId, CancellationToken cancellationToken);
         Task<List<Product>> GetAllAsync(CancellationToken cancellationToken);
-        Task<bool> CheckExistByTitleAsync(string title, CancellationToken cancellationToken, int? ignoreId = null);
+        Task<bool> CheckExistByTitleAsync(string title, CancellationToken cancellationToken, int? productId = null);
     }
 }
