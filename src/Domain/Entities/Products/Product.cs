@@ -23,7 +23,7 @@ namespace Domain.Entities.Products
         {
             if (parent.CanAddChild() is false)
             {
-                throw new ProductParentOwerFlowException();
+                throw new ProductParentOverFlowException();
             }
 
             this.Parent = parent;
