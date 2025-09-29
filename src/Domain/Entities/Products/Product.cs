@@ -10,14 +10,14 @@ namespace Domain.Entities.Products
         public Product? Parent { get; private set; }
         public string? ParentPath { get; private set; }
 
-        public const int MaxHirarechyDepth = 4;
-        public const char HirarechySepratorCharacter = '/';
+        public const int MaxHierarchyDepth = 4;
+        public const char HierarchySeparatorCharacter = '/';
 
-        public int GetHirarechyDepth() => this.ParentPath?.Split(Product.HirarechySepratorCharacter).Length ?? 0;
+        public int GetHierarchyDepth() => this.ParentPath?.Split(Product.HierarechySepratorCharacter).Length ?? 0;
 
-        public bool HasChild() => this.GetHirarechyDepth() > 1;
+        public bool HasChild() => this.GetHierarchyDepth() > 1;
 
-        public bool CanAddChild() => this.GetHirarechyDepth() >= Product.MaxHirarechyDepth;
+        public bool CanAddChild() => this.GetHierarchyDepth() >= Product.MaxHierarchyDepth;
 
         public void SetParent(Product parent)
         {
@@ -28,7 +28,7 @@ namespace Domain.Entities.Products
 
             this.Parent = parent;
             this.ParentId = parent.Id;
-            this.ParentPath=parent.ParentPath+Product.HirarechySepratorCharacter+this.Id;
+            this.ParentPath=parent.ParentPath+Product.HierarechySepratorCharacter+this.Id;
         }
 
         public void ResetParentPath()
