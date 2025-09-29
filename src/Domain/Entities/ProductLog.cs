@@ -1,9 +1,9 @@
-﻿namespace Domain.Entities
-{
-    public class ProductLog
-    {
+﻿using Domain.Entities.Common;
 
-        public int Id { get; set; }
+namespace Domain.Entities
+{
+    public class ProductLog: BaseEntity<int>
+    {
 
         public DateTime CreatedOn { get; init; } = DateTime.Now;
 

@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class User : BaseEntity<int>
+    public class User : NormalEntity<int>
     {
         public string FirstName { get; set; } = null!;
         public string? LastName { get; set; }

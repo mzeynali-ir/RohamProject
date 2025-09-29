@@ -21,6 +21,10 @@ namespace Infrastructure.EntityConfiguration
                 .WithMany()
                 .HasForeignKey(i => i.LastModifierId);
 
+            builder.HasOne(i => i.Parent)
+                .WithMany()
+                .HasForeignKey(i => i.ParentId);
+
         }
     }
 }

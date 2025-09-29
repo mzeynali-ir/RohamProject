@@ -24,6 +24,27 @@ namespace Application.Features.Products
 
             var dbRes = await _repository.AddAsync(product, userId, cancellationToken);
 
+            if (input.ParentId is not null)
+            {
+
+                var parent = await _repository.GetByIdAsync(input.ParentId.Value, cancellationToken);
+
+                if (parent is null)
+                {
+                    return Result.Failure(ProductMessages.ParentNotFound);
+                }
+
+                if (parent.ParentDepth>=Product.MaxParentDepth)
+                {
+                    return Result.Failure(ProductMessages.ParentDepthOwerFlow);
+                }
+
+                product!.SetParent(parent);
+
+            }
+
+            await _repository.UpdateAsync(product, userId, cancellationToken);
+
             if (dbRes is false)
             {
                 return Result.Failure(ProductMessages.ErrorInAdd);

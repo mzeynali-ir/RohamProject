@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Domain.Entities;
 
 namespace Application.Features.Products
 {
@@ -22,6 +23,25 @@ namespace Application.Features.Products
             if (checkDuplicateTitle)
             {
                 return Result.Failure(ProductMessages.NameIsDuplicate);
+            }
+
+            if (input.ParentId is not null)
+            {
+
+                var parent = await _repository.GetByIdAsync(input.ParentId.Value, cancellationToken);
+
+                if (parent is null)
+                {
+                    return Result.Failure(ProductMessages.ParentNotFound);
+                }
+
+                if (parent.ParentDepth>=Product.MaxParentDepth)
+                {
+                    return Result.Failure(ProductMessages.ParentDepthOwerFlow);
+                }
+
+                product.SetParent(parent);
+
             }
 
             product.Title = input.Title;
