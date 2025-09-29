@@ -6,6 +6,8 @@ namespace Domain.Entities.Users
     {
         public string FirstName { get; set; } = null!;
         public string? LastName { get; set; }
+
+        public string FullName => this.FirstName+" "+this.LastName;
     }
 
 }

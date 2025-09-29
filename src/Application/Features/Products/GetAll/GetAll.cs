@@ -12,7 +12,13 @@ namespace Application.Features.Products
             var res = products.Select(i => new GetAllProductResponse()
             {
                 Id = i.Id,
+                ParentId = i.ParentId,
                 Title = i.Title,
+
+                CreatedOn = i.CreatedOn,
+                CreatorFullName=i.Creator.FullName,
+                LastModifiedOn = i.LastModifiedOn,
+                LastModifierFullName=i.LastModifier?.FullName,
             }).ToList();
 
             return Result<List<GetAllProductResponse>>.Success(res);

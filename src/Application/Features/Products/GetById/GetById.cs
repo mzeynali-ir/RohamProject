@@ -18,7 +18,13 @@ namespace Application.Features.Products
             var res = new GetByIdProductResponse()
             {
                 Id = product.Id,
+                ParentId = product.ParentId,
                 Title = product.Title,
+
+                CreatedOn = product.CreatedOn,
+                CreatorFullName=product.Creator.FullName,
+                LastModifiedOn = product.LastModifiedOn,
+                LastModifierFullName=product.LastModifier?.FullName,
             };
 
             return Result<GetByIdProductResponse>.Success(res);

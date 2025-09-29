@@ -90,7 +90,9 @@ namespace Application.Contracts.Repositories
 
         public async Task<List<Product>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _context.Products.ToListAsync(cancellationToken);
+            return await _context.Products
+                .Include(i => i.Creator)
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<Product?> GetByIdAsync(int id, CancellationToken cancellationToken)
@@ -98,6 +100,7 @@ namespace Application.Contracts.Repositories
             var product = await _context.Products
                 .AsNoTracking()
                 .Where(i => i.Id == id)
+                .Include(i => i.Creator)
                 .FirstOrDefaultAsync(cancellationToken);
 
             return product;
