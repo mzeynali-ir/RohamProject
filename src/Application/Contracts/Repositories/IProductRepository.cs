@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.Products;
 
 namespace Application.Contracts.Repositories
 {

@@ -1,4 +1,6 @@
 ﻿using Domain.Entities;
+using Domain.Entities.ProductLogs;
+using Domain.Entities.Products;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +29,7 @@ namespace Application.Contracts.Repositories
                     CreatorId = userId,
                     CreatedOn = product.CreatedOn,
                     Type = LogActionType.Add,
-                    ProductId = product.Id,
+                    Product = product,
                 };
                 _context.ProductLogs.Add(log);
 
@@ -73,7 +75,7 @@ namespace Application.Contracts.Repositories
                     CreatorId = userId,
                     CreatedOn = now,
                     Type = LogActionType.Delete,
-                    ProductId = product.Id,
+                    Product = product,
                 };
                 _context.ProductLogs.Add(log);
 

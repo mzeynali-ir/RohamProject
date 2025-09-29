@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.ProductLogs;
+using Domain.Entities.Products;
+using Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Contexts
@@ -10,6 +12,13 @@ namespace Infrastructure.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            foreach (var foreignKey in modelBuilder.Model.GetEntityTypes()
+                         .SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(IAssemblyMarker).Assembly);
 
             base.OnModelCreating(modelBuilder);

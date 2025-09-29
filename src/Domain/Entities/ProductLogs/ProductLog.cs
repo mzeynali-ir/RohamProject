@@ -1,6 +1,8 @@
 ﻿using Domain.Entities.Common;
+using Domain.Entities.Products;
+using Domain.Entities.Users;
 
-namespace Domain.Entities
+namespace Domain.Entities.ProductLogs
 {
     public class ProductLog: BaseEntity<int>
     {

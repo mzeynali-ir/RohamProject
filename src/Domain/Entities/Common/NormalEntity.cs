@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities.Common
+﻿using Domain.Entities.Users;
+
+namespace Domain.Entities.Common
 {
     public abstract class NormalEntity<TKey> : BaseEntity<TKey>, ISoftDelete
         where TKey : struct
@@ -9,7 +11,7 @@
         public int CreatorId { get; set; }
         public User Creator { get; init; } = null!;
 
-        public int LastModifierId { get; set; }
+        public int? LastModifierId { get; set; }
         public User? LastModifier { get; init; }
 
         public bool IsDeleted { get; private set; }

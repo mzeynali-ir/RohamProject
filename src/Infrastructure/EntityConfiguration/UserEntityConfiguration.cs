@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,15 +14,12 @@ namespace Infrastructure.EntityConfiguration
             builder.Property(i => i.LastName)
                 .HasMaxLength(64);
 
-            builder.HasQueryFilter(i => i.IsDeleted == false);
-
-            builder.HasOne(i => i.Creator)
-                .WithMany()
-                .HasForeignKey(i => i.CreatorId);
-
-            builder.HasOne(i => i.LastModifier)
-                .WithMany()
-                .HasForeignKey(i => i.LastModifierId);
+            builder.HasData(new User()
+            {
+                Id=1,
+                FirstName="مصطفی",
+                LastName="زینلی",
+            });
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Application.DTOs;
-using Domain.Entities;
+using Domain.Entities.Products;
 
 namespace Application.Features.Products
 {
@@ -17,6 +17,15 @@ namespace Application.Features.Products
                 return Result.Failure(ProductMessages.NameIsDuplicate);
             }
 
+            if (input.ParentId is not null)
+            {
+                var checkParent = await this.CheckParentAsync(parentId: input.ParentId.Value, cancellationToken);
+                if (checkParent.IsSuccess is false)
+                {
+                    return checkParent;
+                }
+            }
+
             var product = new Product()
             {
                 Title = input.Title,
@@ -26,21 +35,12 @@ namespace Application.Features.Products
 
             if (input.ParentId is not null)
             {
-
                 var parent = await _repository.GetByIdAsync(input.ParentId.Value, cancellationToken);
-
-                if (parent is null)
-                {
-                    return Result.Failure(ProductMessages.ParentNotFound);
-                }
-
-                if (parent.ParentDepth>=Product.MaxParentDepth)
-                {
-                    return Result.Failure(ProductMessages.ParentDepthOwerFlow);
-                }
-
-                product!.SetParent(parent);
-
+                product!.SetParent(parent!);
+            }
+            else
+            {
+                product.ResetParentPath();
             }
 
             await _repository.UpdateAsync(product, userId, cancellationToken);

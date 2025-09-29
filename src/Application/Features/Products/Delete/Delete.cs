@@ -15,6 +15,11 @@ namespace Application.Features.Products
                 return Result.Failure(ProductMessages.NotFound);
             }
 
+            if (product.HasChild())
+            {
+                return Result.Failure(ProductMessages.HasChildWhenDelete);
+            }
+
             var dbRes = await _repository.DeleteAsync(id, userId, cancellationToken);
 
             if (dbRes is false)

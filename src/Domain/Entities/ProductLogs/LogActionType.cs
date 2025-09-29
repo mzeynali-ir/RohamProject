@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+﻿namespace Domain.Entities.ProductLogs
 {
     public enum LogActionType : byte
     {

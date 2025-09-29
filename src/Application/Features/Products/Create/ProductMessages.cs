@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.Products;
 
 namespace Application.Features.Products
 {
@@ -9,7 +9,8 @@ namespace Application.Features.Products
         public static string ParentNotFound => "محصول سرگروه پیدا نشد";
         public static string ErrorInAdd => "محصول اضافه نشد";
         public static string ErrorInUpdate => "محصول ویرایش نشد";
-        public static string ParentDepthOwerFlow => $"تعداد سرگروه های محصول نمیتواند بیشتر از {Product.MaxParentDepth} عدد باشد";
+        public static string ParentDepthOwerFlow => $"تعداد سرگروه های محصول نمیتواند بیشتر از {Product.MaxHirarechyDepth} عدد باشد";
+        public static string HasChildWhenDelete => "این محصول دارای زیرگروه است و امکان حذف ندارد";
     }
 
 }

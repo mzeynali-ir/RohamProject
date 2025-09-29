@@ -1,4 +1,5 @@
-﻿using Infrastructure.Contexts;
+﻿using Application.Contracts.Repositories;
+using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +12,10 @@ namespace Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(option =>
             {
-                option.UseSqlServer(configuration["CS"]);
+                option.UseSqlServer(configuration["ConnectionStrings:Default"]);
             });
+
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             return services;
         }
