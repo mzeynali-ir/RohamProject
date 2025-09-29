@@ -8,11 +8,11 @@ namespace Application.Features.Products
         public async Task<Result> CreateAsync(CreateProductRequest input, int userId, CancellationToken cancellationToken)
         {
 
-            var isExist = await _repository.CheckExistByTitleAsync(
+            var checkDuplicateTitle = await _repository.CheckExistByTitleAsync(
                                             input.Title,
                                             cancellationToken);
 
-            if (isExist)
+            if (checkDuplicateTitle)
             {
                 return Result.Failure(ProductMessages.NameIsDuplicate);
             }
